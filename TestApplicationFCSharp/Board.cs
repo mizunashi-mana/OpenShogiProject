@@ -10,14 +10,56 @@ namespace TestApplicationFCSharp
     {
         public KomaState[,] komaStates;
 
+        public int boardWidth
+        {
+            get
+            {
+                return this.komaStates.GetLength(1);
+            }
+        }
+
+        public int boardHeight
+        {
+            get
+            {
+                return this.komaStates.GetLength(0);
+            }
+        }
+
         public Board()
         {
+            var komas = new Komas[9, 9]{
+                {Komas.KYOSHA, Komas.KEIMA, Komas.GINSHO, Komas.KINSHO, Komas.GYOKU, Komas.KINSHO, Komas.GINSHO, Komas.KEIMA, Komas.KYOSHA},
+                {Komas.NONE, Komas.HISHA, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.KAKUGYO, Komas.NONE},
+                {Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO},
+                {Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE},
+                {Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE},
+                {Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE},
+                {Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO, Komas.FUHYO},
+                {Komas.NONE, Komas.KAKUGYO, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.NONE, Komas.HISHA, Komas.NONE},
+                {Komas.KYOSHA, Komas.KEIMA, Komas.GINSHO, Komas.KINSHO, Komas.OSHO, Komas.KINSHO, Komas.GINSHO, Komas.KEIMA, Komas.KYOSHA},
+            };
 
+            this.komaStates = new KomaState[9, 9];
+            for (int r = 0, a = this.komaStates.GetLength(0) / 2; r < this.komaStates.GetLength(0); r++)
+            {
+                for (int c = 0; c < this.komaStates.GetLength(1); c++)
+                {
+                    var ptype = PlayerTypes.NONE;
+                    if (komas[r, c] != Komas.NONE)
+                    {
+                        if (r < a) ptype = PlayerTypes.SENTE;
+                        else ptype = PlayerTypes.GOTE;
+                    }
+                    this.komaStates[r, c] = new KomaState(komas[r, c], ptype);
+                }
+            }
         }
     }
 
     public enum Komas
     {
+        NONE,       // 無し
         OSHO,       // 王将
         GYOKU,      // 玉将
         HISHA,      // 飛車
@@ -37,6 +79,7 @@ namespace TestApplicationFCSharp
 
     public enum PlayerTypes
     {
+        NONE,   // 無し
         SENTE,  // 先手
         GOTE,   // 後手
     }
@@ -57,7 +100,7 @@ namespace TestApplicationFCSharp
 
     }
 
-    public class BoardState
+    public class BoardState : System.Collections.IEnumerable
     {
         private readonly KomaState[,] _komastate;
 
@@ -72,7 +115,7 @@ namespace TestApplicationFCSharp
         {
             get
             {
-                return this._komastate.GetLength(0);
+                return this._komastate.GetLength(1);
             }
         }
 
@@ -80,14 +123,20 @@ namespace TestApplicationFCSharp
         {
             get
             {
-                return this._komastate.GetLength(1);
+                return this._komastate.GetLength(0);
             }
         }
 
         public BoardState(Board board)
         {
-            _komastate = null;
+            this._komastate = new KomaState[board.boardHeight, board.boardWidth];
             Array.Copy(board.komaStates, this._komastate, board.komaStates.Length);
         }
+
+        public System.Collections.IEnumerator GetEnumerator()
+        {
+            return this._komastate.GetEnumerator();
+        }
+
     }
 }

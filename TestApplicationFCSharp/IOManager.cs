@@ -13,6 +13,7 @@ namespace TestApplicationFCSharp
         public static readonly ReadOnlyDictionary<Komas, string> komaShows = 
             new ReadOnlyDictionary<Komas,string>(new Dictionary<Komas,string>
         {
+            {Komas.NONE, "　"},
             {Komas.FUHYO, "歩"},
             {Komas.GINSHO, "銀"},
             {Komas.GYOKU, "玉"},
@@ -33,23 +34,33 @@ namespace TestApplicationFCSharp
         public static readonly ReadOnlyDictionary<PlayerTypes,ConsoleColor> pTypeColors =
             new ReadOnlyDictionary<PlayerTypes,ConsoleColor>(new Dictionary<PlayerTypes, ConsoleColor>
         {
+            {PlayerTypes.NONE, ConsoleColor.White},
             {PlayerTypes.SENTE, ConsoleColor.White},
             {PlayerTypes.GOTE, ConsoleColor.Green},
         });
 
         public static void printBoard(BoardState bst)
         {
+            int komaShowLength = 2;
+            int barShowLength = bst.boardWidth * (1 + komaShowLength) + 1;
+
             // 盤面描写
-            Console.WriteLine(new string('-', bst.boardWidth * 2 + 1));
+            var sColor = Console.ForegroundColor;
+            Console.ResetColor();
+            Console.WriteLine(new string('-', barShowLength));
             for (int r = 0; r < bst.boardHeight; r++ )
             {
                 for (int c = 0; c < bst.boardWidth; c++)
                 {
-                    Console.Write("|" + komaShows[ bst[r,c].Koma ]);
+                    Console.Write("|");
+                    Console.ForegroundColor = pTypeColors[bst[r, c].pType];
+                    Console.Write(komaShows[bst[r, c].Koma]);
+                    Console.ResetColor();
                 }
                 Console.WriteLine("|");
-                Console.WriteLine(new string('-', bst.boardWidth * 2 + 1));
+                Console.WriteLine(new string('-', barShowLength));
             }
+            Console.ForegroundColor = sColor;
         }
     }
 }

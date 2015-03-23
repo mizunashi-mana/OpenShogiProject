@@ -10,6 +10,8 @@ namespace TestApplicationFCSharp
     {
         static void Main(string[] args)
         {
+            IOManager.printBoard(new BoardState(new Board()));
+            Console.ReadLine();
         }
     }
 }
