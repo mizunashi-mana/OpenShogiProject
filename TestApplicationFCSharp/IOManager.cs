@@ -63,5 +63,9 @@ namespace TestApplicationFCSharp
             }
             Console.ForegroundColor = sColor;
         }
+
+
+
     }
+
 }

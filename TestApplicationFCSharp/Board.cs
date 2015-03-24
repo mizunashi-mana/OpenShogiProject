@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TestApplicationFCSharp
 {
+    using PlayerIDs = UInt32;
+
     public enum Komas
     {
         NONE,       // 無し
@@ -38,30 +41,62 @@ namespace TestApplicationFCSharp
 
         public abstract class BaseBoard
         {
-            public abstract int boardWidth { get; }
-            public abstract int boardHeight { get; }
+            protected abstract KomaState[,] komaStates
+            {
+                get;
+            } 
 
-            public abstract KomaState[,] GetNowKomaStates();
+            public int boardWidth { 
+                get{
+                    return this.komaStates.GetLength(1);
+                } 
+            }
+            public int boardHeight { 
+                get{
+                    return this.komaStates.GetLength(0);
+                } 
+            }
+
+            public KomaState[,] GetNowKomaStates()
+            {
+                var ret = new KomaState[this.boardHeight, this.boardWidth];
+                Array.Copy(this.komaStates, ret, this.komaStates.Length);
+                return ret;
+            }
+
+            public abstract PlayerTypes[] GetPlayers();
+
+
+
+            public bool IsBoardSizeOver(KomaPoint kp) 
+            {
+                return 0 <= kp.r && kp.r < this.boardHeight && 0 <= kp.c && kp.c < this.boardWidth;
+            }
+
+            public abstract void ActionKomaMove(KomaPoint kp_pre, KomaPoint kp_nxt, PlayerTypes ptype);
+
+            public abstract void ActionKomaPut(Komas koma, PlayerTypes ptypes, KomaPoint kp);
+
+            public void ActionKomaMove(KomaPoint kp_pre, KomaPoint kp_nxt)
+            {
+                if (!IsBoardSizeOver(kp_pre) || !IsBoardSizeOver(kp_nxt)) throw new InvalidOperationException("指定された駒の位置がボードの範囲を超えています。");
+                if (this.komaStates[kp_pre.r, kp_pre.c].Koma == Komas.NONE) throw new InvalidOperationException("指定された動かす駒の位置に駒が存在しません。");
+
+            }
+
+            public void ActionKomaPut(Komas koma, PlayerTypes ptype, KomaPoint kp)
+            {
+
+            }
+
         }
 
         public class NormalBoard : BaseBoard
         {
-            private KomaState[,] __komaStates;
-
-            public override int boardWidth
+            protected readonly KomaState[,] __komaStates;
+            protected override KomaState[,] komaStates
             {
-                get
-                {
-                    return this.__komaStates.GetLength(1);
-                }
-            }
-
-            public override int boardHeight
-            {
-                get
-                {
-                    return this.__komaStates.GetLength(0);
-                }
+                get { return this.__komaStates; }
             }
 
             public NormalBoard()
@@ -94,34 +129,56 @@ namespace TestApplicationFCSharp
                     }
                 }
             }
-
-            public override KomaState[,] GetNowKomaStates()
-            {
-                var ret = new KomaState[this.boardHeight, this.boardWidth];
-                Array.Copy(this.__komaStates, ret, this.__komaStates.Length);
-                return ret;
-            }
         }
 
-        public class KomaState
+        public struct KomaState
         {
-            private readonly Komas _koma;
-            public Komas Koma { get { return _koma; } }
+            public readonly Komas Koma;
 
-            private readonly PlayerTypes _ptype;
-            public PlayerTypes pType { get { return _ptype; } }
+            public readonly PlayerTypes pType;
 
             public KomaState(Komas koma, PlayerTypes ptype)
             {
-                this._koma = koma;
-                this._ptype = ptype;
+                this.Koma = koma;
+                this.pType = ptype;
             }
 
+        }
+
+        public struct KomaPoint
+        {
+            public uint row;
+            public uint column;
+
+            public uint r
+            {
+                get { return this.row; }
+                set { this.row = value; }
+            }
+
+            public uint c
+            {
+                get { return this.column; }
+                set { this.column = value; }
+            }
+
+            public uint col
+            {
+                get { return this.column; }
+                set { this.column = value; }
+            }
+
+            public KomaPoint(uint row, uint col)
+            {
+                this.row = row;
+                this.column = col;
+            }
         }
 
         public class BoardState : System.Collections.IEnumerable
         {
             private readonly KomaState[,] _komastate;
+            private readonly ReadOnlyDictionary<PlayerIDs, Komas> bringKomaStates;
 
             public KomaState this[int row, int col]
             {
