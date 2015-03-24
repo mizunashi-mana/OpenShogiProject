@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace TestApplicationFCSharp
 {
-    using Board;
-    class Program
+    public enum BoardMode
     {
-        static void Main(string[] args)
+        NORMAL,
+    }
+
+    public class BoardManager
+    {
+        public BoardManager(BoardMode bmode = BoardMode.NORMAL)
         {
-            IOManager.printBoard(new BoardState(new NormalBoard()));
-            Console.ReadLine();
+
         }
+
     }
 }

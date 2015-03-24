@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestApplicationFCSharp
 {
+    using Board;
 
     class IOManager
     {

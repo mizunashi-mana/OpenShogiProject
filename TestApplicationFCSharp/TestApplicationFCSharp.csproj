@@ -59,6 +59,7 @@
     <Compile Include="Board.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="IOManager.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

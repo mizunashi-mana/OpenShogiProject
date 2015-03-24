@@ -13,6 +13,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TestApplication", "TestAppl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplicationFCSharp", "TestApplicationFCSharp\TestApplicationFCSharp.csproj", "{2023C786-43A1-406F-8A86-E71C9ED395ED}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestApp", "TestApp", "{E81D9D87-D3AA-462B-B4C4-DF3ED75FC14A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{7B66F53E-7AA3-4C06-BD52-293745D1F5DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB2C0C02-8EC7-4737-9A48-9A9ABB293421} = {7B66F53E-7AA3-4C06-BD52-293745D1F5DF}
+		{5FAA4A2B-566C-4506-833D-7718704CC801} = {7B66F53E-7AA3-4C06-BD52-293745D1F5DF}
+		{B24E9784-274A-4CAD-8672-A7C0C3FF3A19} = {7B66F53E-7AA3-4C06-BD52-293745D1F5DF}
+		{4765977B-9B08-4664-8A0F-D9555DDD39A6} = {E81D9D87-D3AA-462B-B4C4-DF3ED75FC14A}
+		{2023C786-43A1-406F-8A86-E71C9ED395ED} = {E81D9D87-D3AA-462B-B4C4-DF3ED75FC14A}
 	EndGlobalSection
 EndGlobal
