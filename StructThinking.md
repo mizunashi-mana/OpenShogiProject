@@ -71,16 +71,23 @@ using TestApp;
 
 - Board.KomaType(enum)
  - 駒の種類
+ - NONE, OUSHO, GYOKU, HISHA, RYUOU, KAKUGYO, RYUMA, KINSHO,
+ - GINSHO, NARIGIN, KEIMA, NARIKEI, KYOSHA, NARIKYO, FUHYO,
 - Board.PlayerType(enum)
  - プレイヤーの種類
+ - NONE, SENTE, GOTE, 
 - Board.BoardType(enum)
  - ゲームの種類
+ - Normal, Mini, Yonin, Tsume, Hasami,
 
 #### Interfaces and abstract classes
 using TestApp;
 
 - Board.BaseBoard
  - ボードの基盤
+ - komaStates (abstract property) -- get-onlyプロパティ。駒の状態を保持
+ - boardWidth (property) -- get-onlyプロパティ。ボードの横の長さを保持
+ - boardHeight (property) -- get-onlyプロパティ。ボードの縦の長さを保持
 - UI.IIOManager
  - UIのマネージャー基盤
  - AddClient (method) -- クライアントを追加（IPlayer）演算子+=割り当て？
@@ -97,7 +104,7 @@ using TestApp;
 - Board.KomaPoint
  - 駒の位置を表す構造体
 - Board.BoardState
- - ボードの状態を表す構造体
+ - ボードの状態を表すクラス
 - Board.BoardAction
  - ボードの状態の操作を表す構造体
 - UI.GUIManager : UI.IIOManager
