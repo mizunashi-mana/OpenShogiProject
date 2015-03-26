@@ -83,14 +83,35 @@ using TestApp;
  - ボードの基盤
 - UI.IIOManager
  - UIのマネージャー基盤
+ - AddClient (method) -- クライアントを追加（IPlayer）演算子+=割り当て？
 - Client.IPlayer
  - クライアントの基盤
 
-#### classes
+#### classes and structs
 using TestApp;
 
-
-## ToDo
+- Board.NormalBoard : Board.BaseBoard
+ - 通常の将棋のボードクラス
+- Board.KomaState
+ - 駒の状態を表す構造体
+- Board.KomaPoint
+ - 駒の位置を表す構造体
+- Board.BoardState
+ - ボードの状態を表す構造体
+- Board.BoardAction
+ - ボードの状態の操作を表す構造体
+- UI.GUIManager : UI.IIOManager
+ - GUIのマネージャークラス
+- UI.GUIForm
+ - GUIのフォームクラス
+- UI.CUIManager : UI.IIOManager
+ - CUIのマネージャークラス
+- Client.AutoPlayer : Client.IPlayer
+ - テスト用の自動打ちプレーヤークラス
+- Client.ManPlayer : Client.IPlayer
+ - IIOManagerからアクションをもらって打つプレーヤークラス
+- Manager.GameManager
+ - Gameの進行を管理するクラス
 
 ## 簡易メモ
 
