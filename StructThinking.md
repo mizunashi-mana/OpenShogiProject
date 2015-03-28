@@ -1,4 +1,4 @@
-﻿# 構成想定
+# 構成想定
 
 このプログラムの構成の案。テストアプリを書いてて、割と行き詰ったので。
 
@@ -9,6 +9,7 @@
 - 対人オンリー
  - とりあえずAIは考えずに手入力のIOを考える
  - プロトコルもなし
+- 通常の将棋モードだけ実装
 - CUI版、GUI版作成
 - C#簡易アプリ→設計した後F# Manager & C# GUI
 
@@ -23,9 +24,12 @@
 - プロトコル対応
  - ルーム関連への対応
  - AI動作対応
+- ログ・ゲーム記録機能整備
 - AI開発者向けクライアント作成
  - USI to JSON or DSL or PlainInput
  - 簡易ボット作成対応
+- 他の類似将棋ゲームにも対応
+ - せめて5五将棋には対応：電通大の調布祭AIコンテストがこれなので
 
 ### Webサービス化
 
@@ -49,7 +53,7 @@ game.end();
 
 ## 構造案
 
-### on C# 
+### on CSharp
 
 #### namespaces
 
@@ -93,6 +97,10 @@ using TestApp;
 - UI.IIOManager
  - UIのマネージャー基盤
  - AddClient (method) -- クライアントを追加（IPlayer）演算子+=割り当て？
+ - RemoveClient (method) -- クライアントを削除（IPlayer) 演算子-=割り当て？
+- Manager.IGameManager
+ - AddClient (method) -- クライアントを追加（IPlayer）演算子+=割り当て？
+ - RemoveClient (method) -- クライアントを削除（IPlayer) 演算子-=割り当て？
 - Client.IPlayer
  - クライアントの基盤
 
@@ -105,6 +113,8 @@ using TestApp;
  - 駒の状態を表す構造体
 - Board.KomaPoint
  - 駒の位置を表す構造体
+ - r = row (member) -- 行番号
+ - c = col = column (member) -- 列番号
 - Board.BoardState
  - ボードの状態を表すクラス
 - Board.BoardAction
@@ -119,9 +129,11 @@ using TestApp;
  - テスト用の自動打ちプレーヤークラス
 - Client.ManPlayer : Client.IPlayer
  - IIOManagerからアクションをもらって打つプレーヤークラス
-- Manager.GameManager
- - Gameの進行を管理するクラス
+- Manager.NormalGameManager : Manager.IGameManager
+ - 通常の将棋ゲームの進行を管理するクラス
 
 ## 簡易メモ
 
 ## 問題点
+
+
