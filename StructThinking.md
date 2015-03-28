@@ -88,6 +88,8 @@ using TestApp;
  - komaStates (abstract property) -- get-onlyプロパティ。駒の状態を保持
  - boardWidth (property) -- get-onlyプロパティ。ボードの横の長さを保持
  - boardHeight (property) -- get-onlyプロパティ。ボードの縦の長さを保持
+ - GetNowBoardStatus (method) -- 現在のボードの状態をBoardStateで返す
+ - GetPlayers (abstract method) -- 全てのプレイヤーを返す。
 - UI.IIOManager
  - UIのマネージャー基盤
  - AddClient (method) -- クライアントを追加（IPlayer）演算子+=割り当て？
