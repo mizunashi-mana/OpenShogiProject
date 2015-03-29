@@ -101,8 +101,10 @@ using TestApp;
 - Manager.IGameManager
  - AddClient (method) -- クライアントを追加（IPlayer）演算子+=割り当て？
  - RemoveClient (method) -- クライアントを削除（IPlayer) 演算子-=割り当て？
-- Client.IPlayer
+- Client.IClient
  - クライアントの基盤
+- Client.BasePlayer : Client.IClient
+ - プレーヤーの基盤
 
 #### classes and structs
 using TestApp;
@@ -125,9 +127,9 @@ using TestApp;
  - GUIのフォームクラス
 - UI.CUIManager : UI.IIOManager
  - CUIのマネージャークラス
-- Client.AutoPlayer : Client.IPlayer
+- Client.AutoPlayer : Client.BasePlayer
  - テスト用の自動打ちプレーヤークラス
-- Client.ManPlayer : Client.IPlayer
+- Client.ManPlayer : Client.BasesPlayer
  - IIOManagerからアクションをもらって打つプレーヤークラス
 - Manager.NormalGameManager : Manager.IGameManager
  - 通常の将棋ゲームの進行を管理するクラス
