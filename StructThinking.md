@@ -113,12 +113,16 @@ using TestApp;
  - 通常の将棋のボードクラス
 - Board.KomaState
  - 駒の状態を表す構造体
+ - Koma (member) -- Komaの種類
+ - Player (member) -- 駒を持っているプレイヤー
 - Board.KomaPoint
  - 駒の位置を表す構造体
  - r = row (member) -- 行番号
  - c = col = column (member) -- 列番号
-- Board.BoardState
+- Board.BoardState : IEnumerable
  - ボードの状態を表すクラス
+ - [int, int] (indexer) -- get-onlyの駒の状態
+ - boardWidth (member) -- 
 - Board.BoardAction
  - ボードの状態の操作を表す構造体
 - UI.GUIManager : UI.IIOManager
